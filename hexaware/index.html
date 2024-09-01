@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S-KILL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f0f8ff; /* Light blue background */
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            position: fixed;
+            background-color: #1e90ff; /* Dodger blue for navbar */
+            padding: 15px 25px;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .menu {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #ffffff; /* White text for menu */
+        }
+
+        .navbar .heading1 {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            color: #ffffff; /* White text for heading */
+        }
+
+        .heading2 {
+            display: flex;
+            justify-content: center;
+            color: #1e90ff; /* Dodger blue for heading */
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #87cefa; /* Light sky blue for sidebar */
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 999;
+            overflow-y: auto;
+            padding-top: 60px;
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px;
+            color: #000000; /* Black text for sidebar links */
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid #dcdcdc; /* Light gray border */
+        }
+
+        .sidebar a:hover {
+            background-color: #b0e0e6; /* Powder blue on hover */
+        }
+
+        .wholebar {
+            width: 100%;
+            height: calc(100vh - 60px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .signin {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid #1e90ff; /* Dodger blue border */
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #ffffff; /* White background for the form */
+        }
+
+        .signin .wave {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            top: 0;
+        }
+
+        .f1, .f2, .f3 {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #1e90ff; /* Dodger blue border */
+            border-radius: 5px;
+            transition: width 0.3s ease, border-color 0.3s ease;
+        }
+
+        .f1:hover,
+        .f2:hover,
+        .f3:hover,
+        .f1:focus,
+        .f2:focus,
+        .f3:focus {
+            width: 300px;
+            border-color: #00008b; /* Dark blue border on hover */
+        }
+
+        .submit2 {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #1e90ff; /* Dodger blue background */
+            color: #ffffff; /* White text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .submit2:hover,
+        .submit2:focus {
+            background-color: #4682b4; /* Steel blue on hover */
+            transform: scale(1.05);
+            outline: none;
+        }
+        @keyframes move {
+            100% {
+                transform: translate3d(0, 0, 1px) rotate(360deg);
+            }
+        }
+
+        .background {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            background: #3E1E68;
+            overflow: hidden;
+        }
+
+        .background span {
+            width: 20vmin;
+            height: 20vmin;
+            border-radius: 20vmin;
+            backface-visibility: hidden;
+            position: absolute;
+            animation: move;
+            animation-duration: 45s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .background span:nth-child(0) {
+            color: #583C87;
+            top: 8%;
+            left: 49%;
+            animation-duration: 37s;
+            animation-delay: -6s;
+            transform-origin: 8vw -1vh;
+            box-shadow: -40vmin 0 5.983790893380091vmin currentColor;
+        }
+
+        /* More background spans ... */
+    </style>
+</head>
+<body>
+    <div class="background">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav class="navbar">
+        <button class="menu" onclick="toggleSidebar()"><i class="fas fa-bars"></i> Menu</button>
+        <h1 class="heading1">S-KILL</h1>
+    </nav>
+
+    <div class="sidebar" id="sidebar">
+        <a href="http://127.0.0.1:5500/test.html#">Test Your Skills</a>
+        <a href="#">Dashboard</a>
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Help</a>
+    </div>
+
+    <div class="wholebar">
+        <div class="signin">
+            <h2 class="heading2">Create an Account</h2>
+            <form id="signupForm">
+                <input class="f1" type="text" placeholder="Name" id="name" required>
+                <input class="f2" type="email" placeholder="Email_id" id="email" required>
+                <input class="f3" type="text" placeholder="Phone number" id="phone" required>
+                <button type="submit" class="submit2">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Handle form submission
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Simulate form processing and user creation
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var phone = document.getElementById('phone').value;
+
+            // Simulate a sign-up process (In a real-world scenario, you would send this data to a server)
+            if(name && email && phone) {
+                alert('Account created successfully!');
+                window.location.href = "http://127.0.0.1:5500/test.html"; // Redirect to the Test Your Skills page
+            } else {
+                alert('Please fill out all fields.');
+            }
+        });
+    </script>
+</body>
+</html>

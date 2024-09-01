@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Your Skills</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f0f8ff; /* Light blue background */
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center; /* Center the content in the navbar */
+            align-items: center; /* Vertically align items */
+            position: fixed;
+            background-color: #1e90ff; /* Dodger blue for navbar */
+            padding: 15px 25px;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box; /* Ensure padding is included in width */
+        }
+
+        .navbar .menu {
+            position: absolute; /* Position it on the left */
+            left: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #ffffff; /* White text for menu */
+        }
+
+        .navbar .heading1 {
+            margin: 0;
+            color: #ffffff; /* White text for heading */
+            font-size: 24px;
+            text-align: center; /* Center the title */
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #87cefa; /* Light sky blue for sidebar */
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+            transform: translateX(100%); /* Initially hide the sidebar */
+            transition: transform 0.3s ease;
+            z-index: 999;
+            overflow-y: auto;
+            padding-top: 60px;
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+
+        .sidebar.active {
+            transform: translateX(0); /* Show the sidebar when active */
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px;
+            color: #000000; /* Black text for sidebar links */
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid #dcdcdc; /* Light gray border */
+        }
+
+        .sidebar a:hover {
+            background-color: #b0e0e6; /* Powder blue on hover */
+        }
+
+        .wholebar {
+            width: 100%;
+            height: calc(100vh - 60px);
+            display: flex;
+            flex-wrap: wrap; /* Ensure the divs wrap to the next line */
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .box {
+            width: calc(33.333% - 20px); /* 3 items per row with spacing */
+            margin: 10px;
+            padding: 20px;
+            background-color: #ffffff; /* White background for boxes */
+            border: 2px solid #1e90ff; /* Dodger blue border */
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .box h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #1e90ff; /* Dodger blue for headings */
+        }
+
+        .box p {
+            font-size: 16px;
+            color: #333333; /* Dark gray for description text */
+        }
+
+        .box:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Adjust the width for smaller screens */
+        @media (max-width: 768px) {
+            .box {
+                width: calc(50% - 20px); /* 2 items per row on smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .box {
+                width: calc(100% - 20px); /* 1 item per row on very small screens */
+            }
+        }
+
+        @keyframes move {
+            100% {
+                transform: translate3d(0, 0, 1px) rotate(360deg);
+            }
+        }
+
+        .background {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            background: #3E1E68;
+            overflow: hidden;
+            z-index: -1; /* Ensure background is behind other content */
+        }
+
+        .background span {
+            width: 20vmin;
+            height: 20vmin;
+            border-radius: 20vmin;
+            backface-visibility: hidden;
+            position: absolute;
+            animation: move;
+            animation-duration: 45s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .background span:nth-child(1) {
+            color: #583C87;
+            top: 8%;
+            left: 49%;
+            animation-duration: 37s;
+            animation-delay: -6s;
+            transform-origin: 8vw -1vh;
+            box-shadow: -40vmin 0 5.983790893380091vmin currentColor;
+        }
+
+        /* More span styles as previously defined... */
+    </style>
+</head>
+<body>
+    <div class="background">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav class="navbar">
+        <button class="menu" onclick="toggleSidebar()"><i class="fas fa-bars"></i> Menu</button>
+        <a href="http://127.0.0.1:5500/index.html"><h1 class="heading1">S-KILL</h1></a>
+    </nav>
+
+    <div class="sidebar" id="sidebar">
+        <a href="http://127.0.0.1:5500/test.html#">Test Your Skills</a>
+        
+        <a href="#">Dashboard</a>
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Help</a>
+    </div>
+
+    <div class="wholebar">
+        <div class="box">
+           <a href="/writing.html"><h3>Writing</h3></a> 
+       
+
+            <p>Assess your writing skills with engaging exercises designed to improve your clarity and style.</p>
+        </div>
+        <div class="box">
+            <h3>Speaking</h3>
+            <p>Practice your speaking skills with interactive tests to enhance your communication abilities.</p>
+        </div>
+        <div class="box">
+            <h3>Listening</h3>
+            <p>Test your listening skills with various audio exercises to sharpen your understanding and response.</p>
+        </div>
+        <div class="box">
+            <h3>Verbal</h3>
+            <p>Challenge your verbal abilities with tasks that test your vocabulary and comprehension.</p>
+        </div>
+        <div class="box">
+            <h3>Aptitude</h3>
+            <p>Measure your problem-solving skills with aptitude tests that assess logical and analytical thinking.</p>
+        </div>
+        <div class="box">
+            <h3>Reasoning</h3>
+            <p>Improve your reasoning skills with puzzles and scenarios designed to test your critical thinking.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

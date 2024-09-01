@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f0f8ff;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            position: fixed;
+            background-color: #1e90ff;
+            padding: 15px 25px;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .menu {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        .navbar .heading1 {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            color: #ffffff;
+            text-decoration: none; /* Remove underline from the heading */
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #87cefa;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+            transform: translateX(-100%); /* Initially hide the sidebar */
+            transition: transform 0.3s ease;
+            z-index: 999;
+            overflow-y: auto;
+            padding-top: 60px;
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+
+        .sidebar.active {
+            transform: translateX(0); /* Show the sidebar when active */
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px;
+            color: #000000;
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid #dcdcdc;
+        }
+
+        .sidebar a:hover {
+            background-color: #b0e0e6;
+        }
+
+        .content {
+            padding: 20px;
+            margin-top: 60px;
+        }
+
+        .question-box {
+            background-color: #ffffff;
+            padding: 20px;
+            border: 2px solid #1e90ff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .question-box h2 {
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
+
+        .question-box textarea {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #dcdcdc;
+            padding: 10px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        .question-box button {
+            background-color: #1e90ff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .result {
+            display: none;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .result .score-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            border: 2px solid #1e90ff;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .result canvas {
+            max-width: 150px;
+            max-height: 150px;
+        }
+
+        .feedback {
+            background-color: #ffffff;
+            padding: 20px;
+            border: 2px solid #1e90ff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .feedback ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .feedback ul li {
+            color: #ff6347; /* Tomato color for errors */
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <button class="menu" onclick="toggleSidebar()"><i class="fas fa-bars"></i> Menu</button>
+        <a href="http://127.0.0.1:5500/index.html" class="heading1">S-KILL</a>
+    </nav>
+
+    <!-- Sidebar HTML -->
+    <div class="sidebar" id="sidebar">
+        <a href="#">Dashboard</a>
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Help</a>
+        <a href="#">Logout</a>
+    </div>
+
+    <div class="content">
+        <div class="question-box">
+            <h2>Writing Test</h2>
+            <p>Write a paragraph on the following topic (max 400 words):</p>
+            <p><strong>"The Impact of Technology on Modern Education"</strong></p>
+            <textarea id="userInput" placeholder="Write your paragraph here..."></textarea>
+            <button onclick="checkGrammar()">Submit</button>
+        </div>
+
+        <div class="result">
+            <div class="score-container">
+                <canvas id="grammarChart"></canvas>
+                <canvas id="vocabularyChart"></canvas>
+                <canvas id="styleChart"></canvas>
+            </div>
+            <div class="feedback">
+                <h3>Feedback:</h3>
+                <ul id="feedbackList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        function checkGrammar() {
+            const userInput = document.getElementById('userInput').value;
+            if (!userInput.trim()) {
+                alert('Please enter your paragraph.');
+                return;
+            }
+
+            // Simulate grammar checking and analysis
+            setTimeout(() => {
+                // Mock data to simulate actual analysis (Replace with real grammar checking API)
+                const grammarScore = 75;
+                const vocabularyScore = 85;
+                const styleScore = 65;
+                const errors = [
+                    { text: 'thechnology', suggestion: 'technology' },
+                    { text: 'imprtant', suggestion: 'important' },
+                    { text: 'enviroment', suggestion: 'environment' }
+                ];
+
+                // Display the results
+                displayResults(grammarScore, vocabularyScore, styleScore, errors);
+            }, 1000); // Simulating delay for analysis
+        }
+
+        function displayResults(grammar, vocabulary, style, errors) {
+            // Show the result section
+            document.querySelector('.result').style.display = 'block';
+
+            // Display the graphs
+            createCircularGraph('grammarChart', 'Grammar', grammar);
+            createCircularGraph('vocabularyChart', 'Vocabulary', vocabulary);
+            createCircularGraph('styleChart', 'Style', style);
+
+            // Display the feedback only if there are errors
+            const feedbackList = document.getElementById('feedbackList');
+            feedbackList.innerHTML = '';
+            if (errors.length > 0) {
+                errors.forEach(error => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `Error: "<strong>${error.text}</strong>" should be "<strong>${error.suggestion}</strong>".`;
+                    feedbackList.appendChild(li);
+                });
+                document.querySelector('.feedback').style.display = 'block';
+            } else {
+                document.querySelector('.feedback').style.display = 'none';
+            }
+        }
+
+        function createCircularGraph(canvasId, label, score) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [label, ''],
+                    datasets: [{
+                        label: label,
+                        data: [score, 100 - score],
+                        backgroundColor: ['#1e90ff', '#dcdcdc'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
